@@ -1,1 +1,4 @@
 theme: jekyll-theme-slate
+title: [OpenQL Project]
+description: [The Open Quantum Language (OpenQL) Project provides Quantum Computer Emulator and various open source libraries for using quantum computing.]
+repository_url: http://github.com/openql-org/

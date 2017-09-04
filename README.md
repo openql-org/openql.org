@@ -1,5 +1,5 @@
 ## About OpenQL Project
-OpenQL (Open Quantum Libraries) is open source software for using quantum computer.
+OpenQL (Open Quantum Library) is open source software for using quantum computer.
 OpenQL specifications and libraries based on OpenQL is released based on Apache License 2.0 and hence free for both academic and commercial use.  
 When you develop programs that operates with a quantum computer, you need tough preparation until you actually operate it.
 Even if you are super-engineer with skills of traditional classical computers, it will be difficult to predict their behavior, since it is completely different from the current computer.

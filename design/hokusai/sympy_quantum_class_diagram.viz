@@ -1,0 +1,197 @@
+var graphCode = `
+digraph graph_name {
+  graph [
+    bgcolor = "#eeffff",
+    rankdir = TB,
+  ]
+  node [
+    shape = record,
+    fontsize = 10,
+  ]
+
+  Expr [ label = "Expr | (Basic, EvalfMixin)" ]
+  Expr -> Basic
+  Function [ label = "Function | (Application, Expr)" ]
+  Function -> {Application, Expr}
+  Application [ label = "Application | (FunctionClass, Basic)" ]
+  Application -> Basic
+  adjoint [ label = "adjoint | (Function) " ]
+  adjoint -> Function
+
+  QExpr -> Expr
+  QuantumError -> Exception
+
+  AntiCommutator -> Expr
+  Commutator -> Expr
+  InnerProduct -> Expr
+  TensorProduct -> Expr
+
+  Dagger -> adjoint
+
+  Operator -> QExpr
+  HermitianOperator -> Operator
+  UnitaryOperator -> Operator
+  IdentityOperator -> Operator
+  OuterProduct -> Operator
+  DifferentialOeprator -> Operator
+  
+  StateBase -> QExpr
+  State -> StateBase
+  KetBase -> StateBase
+  BraBase -> StateBase
+  TimeDepState -> StateBase
+  Ket -> {State, KetBase}
+  Bra -> {State, BraBase}
+  TimeDepKet -> {TimeDepState, KetBase}
+  TimeDepBra -> {TimeDepState, BraBase}
+  Wavefunction -> Function
+
+  HilbertSpace -> Basic
+  ComplexSpace -> HilbertSpace
+  FockSpace -> HilbertSpace
+  L2 -> HilbertSpace
+
+  HilbertSpaveError -> QuantumError
+
+  Hbar [label = "hbar = HBar" ]
+  ////
+  QubitState -> State
+  Qubit -> {QubitState, Ket}
+  QubitBra -> {QubitState, Bra}
+  IntQubitState -> QubitState
+  IntQubit -> {IntQubitState, Qubit}
+  IntQubitBra -> {IntQubitState, QubitBra}
+
+  Gate -> UnitaryOperator
+  CGate -> Gate
+  CGateS -> CGate
+  UGate -> Gate
+  OneQubitGate -> Gate
+  TwoQubitGate -> Gate
+  IdentityGate -> OneQubitGate
+  HadamardGate -> {HermitianOperator, OneQubitGate}
+  XGate -> {HermitianOperator, OneQubitGate}
+  YGate -> {HermitianOperator, OneQubitGate}
+  ZGate -> {HermitianOperator, OneQubitGate}
+  PhaseGate -> OneQubitGate
+  TGate -> OneQubitGate
+  HadamardGate [label =" H = HaramerdGate" ]
+  XGate [label = "X = XGate" ]
+  YGate [label = "Y = YGate" ]
+  ZGate [label = "Z = ZGate" ]
+  TGate [label = "T = TGate" ]
+  PhaseGate [label =" S = Phase = PhaseGate" ]
+
+  CNotGate -> {HermitianOperator, CGate, TwoQubitGate}
+  SwapGate -> {HermitianOperator, CGate, TwoQubitGate}
+  CNotGate [label = "CNOT = CNotGate" ]
+  SwapGate [label = "SWAP = SwapGate" ]
+
+  XOp -> HermitianOperator
+  YOp -> HermitianOperator
+  ZOp -> HermitianOperator
+  PxOp -> HermitianOperator
+  XOp [label = "X = XOp('X')" ]
+  YOp [label = "Y = YOp('Y')" ]
+  ZOp [label = "Z = ZOp('Z')" ]
+  PxOp [label = "Px = PxOp('Px')" ]
+  XKet -> Ket
+  XBra -> Bra
+  PxKet -> Ket
+  PxBra -> Bra
+  PositionState3D -> State
+  PositionKet3D -> {Ket, PositionState3D}
+  PositionBra3D -> {Bra, PositionState3D}
+
+  OracleGate -> Gate
+  WGate -> Gate
+
+  // GC -> Wigner3j
+  // Wigner3j -> Expr
+  // Wigner6j -> Expr
+  // Wigner9j -> Expr
+
+  // Mz -> OneQubitGate
+  // Mx -> OneQubitGate
+  // CreateOneQubitGate -> ManagedProperties
+
+  Density -> HermitianOperator
+
+  SigmaOpBase -> Operator
+  SigmaX -> SigmaOpBase
+  SigmaY -> SigmaOpBase
+  SigmaZ -> SigmaOpBase
+  SigmaMinus -> SigmaOpBase
+  SigmaPlus -> SigmaOpBase
+  SigmaZKet -> Ket
+  SigmaZBra -> Bra
+
+  // BosonOp -> Operator
+  // BosonFockKet -> Ket
+  // BosonFockBra -> Bra
+  // BosonCoherentKet -> Ket
+  // BosonCoherentBra -> Bra
+
+  // FermionOp -> Oeprator
+  // FermionFockKet -> Ket
+  // FermionFockBra -> Bra
+
+  // PIABHamiltonian -> HermitianOperator
+  // PIABKet -> Ket
+  // PIABBra -> Bra
+
+  Qasm
+  MatrixCache
+
+  // Fourier -> Gate
+  // QFT -> Fourier
+  // IQFT -> Fourier
+  // RkGate -> OneQubitGate
+  // RkGate [label = "Rk = RkGate" ]
+
+  SHOOp -> Operator
+  RaisingOp -> SHOOp
+  LoweringOp -> SHOOp
+  NumberOp -> SHOOp
+  Hamiltonian -> SHOOp
+  SHOState -> State
+  SHOKet -> {SHOState, Ket}
+  SHOBra -> {SHOState, Bra}
+  
+  // OrderFindingException -> QuantumError
+  // CMod -> Gate
+  
+  SpinOpBase
+  JplusOp -> {SpinOpBase, Operator}
+  JplusOp [label = "Jplus = JplusOp('J')" ]
+  JminusOp -> {SpinOpBase, Operator}
+  JminusOp [label = "Jminus = JminusOp('J')" ]
+  JxOp -> {SpinOpBase, HermitianOperator}
+  JxOp [label = "Jx = JxOp('J')" ]
+  JyOp -> {SpinOpBase, HermitianOperator}
+  JyOp [label = "Jy = JyOp('J')" ]
+  JzOp -> {SpinOpBase, HermitianOperator}
+  JzOp [label = "Jz = JzOp('J')" ]
+  J2Op -> {SpinOpBase, HermitianOperator}
+  J2Op [label = "J2 = J2Op('J')" ]
+  Rotation -> UnitaryOperator
+  WignerD -> Expr
+  SpinState -> State
+  JxKet -> {SpinState, Ket}
+  JxBra -> {SpinState, Bra}
+  JyKet -> {SpinState, Ket}
+  JyBra -> {SpinState, Bra}
+  JzKet -> {SpinState, Ket}
+  JzBra -> {SpinState, Bra}
+  CoupledSpinState -> SpinState
+  JxKetCoupled -> {CoupledSpinState, Ket}
+  JxBraCoupled -> {CoupledSpinState, Bra}
+  JyKetCoupled -> {CoupledSpinState, Ket}
+  JyBraCoupled -> {CoupledSpinState, Bra}
+  JzKetCoupled -> {CoupledSpinState, Ket}
+  JzBraCoupled -> {CoupledSpinState, Bra}
+
+ }
+`;
+
+document.getElementById('arch').innerHTML += Viz(graphCode, 'svg')
